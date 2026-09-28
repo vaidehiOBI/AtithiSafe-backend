@@ -1,0 +1,38 @@
+{
+  "name": "atithisafe-backend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "nest build gateway && nest build identity-property && nest build safety-operations && nest build communication-provider",
+    "start:gateway": "nest start gateway --watch",
+    "start:identity": "nest start identity-property --watch",
+    "start:safety": "nest start safety-operations --watch",
+    "start:comms": "nest start communication-provider --watch",
+    "lint": "eslint \"{apps,libs}/**/*.ts\"",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@apollo/gateway": "^2.11.0",
+    "@apollo/server": "^5.0.0",
+    "@apollo/subgraph": "^2.11.0",
+    "@nestjs/apollo": "^13.1.0",
+    "@nestjs/common": "^11.1.0",
+    "@nestjs/config": "^4.0.0",
+    "@nestjs/core": "^11.1.0",
+    "@nestjs/graphql": "^13.1.0",
+    "@nestjs/platform-express": "^11.1.0",
+    "@nestjs/typeorm": "^11.0.0",
+    "graphql": "^16.11.0",
+    "pg": "^8.16.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "typeorm": "^0.3.25"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.0",
+    "@nestjs/schematics": "^11.0.0",
+    "@nestjs/testing": "^11.1.0",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  }
+}

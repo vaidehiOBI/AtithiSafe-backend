@@ -1,0 +1,65 @@
+services:
+  gateway:
+    build: { context: ., dockerfile: apps/gateway/Dockerfile }
+    ports: ["4000:4000"]
+    environment:
+      PORT: 4000
+      JWT_SECRET: ${JWT_SECRET}
+      IDENTITY_PROPERTY_URL: http://identity-property:4001/graphql
+      SAFETY_OPERATIONS_URL: http://safety-operations:4002/graphql
+      COMMUNICATION_PROVIDER_URL: http://communication-provider:4003/graphql
+    depends_on: [identity-property, safety-operations, communication-provider]
+
+  identity-property:
+    build: { context: ., dockerfile: apps/identity-property/Dockerfile }
+    ports: ["4001:4001"]
+    environment:
+      PORT: 4001
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@identity-property-db:5432/identity_property
+    depends_on: [identity-property-db]
+
+  identity-property-db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: identity_property
+    volumes: ["identity_property_data:/var/lib/postgresql/data"]
+
+  safety-operations:
+    build: { context: ., dockerfile: apps/safety-operations/Dockerfile }
+    ports: ["4002:4002"]
+    environment:
+      PORT: 4002
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@safety-operations-db:5432/safety_operations
+      IDENTITY_PROPERTY_URL: http://identity-property:4001/graphql
+    depends_on: [safety-operations-db]
+
+  safety-operations-db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: safety_operations
+    volumes: ["safety_operations_data:/var/lib/postgresql/data"]
+
+  communication-provider:
+    build: { context: ., dockerfile: apps/communication-provider/Dockerfile }
+    ports: ["4003:4003"]
+    environment:
+      PORT: 4003
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@communication-provider-db:5432/communication_provider
+    depends_on: [communication-provider-db]
+
+  communication-provider-db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: communication_provider
+    volumes: ["communication_provider_data:/var/lib/postgresql/data"]
+
+volumes:
+  identity_property_data:
+  safety_operations_data:
+  communication_provider_data:
