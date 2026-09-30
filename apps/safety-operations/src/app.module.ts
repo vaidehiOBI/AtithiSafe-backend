@@ -20,7 +20,7 @@ import { ReportsModule } from './modules/reports/reports.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: 'apps/safety-operations/.env' }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
       autoSchemaFile: { federation: 2 },

@@ -25,7 +25,7 @@ import { AuditLogsModule } from './modules/audit-logs/audit-logs.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: 'apps/identity-property/.env' }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     GraphQLModule.forRootAsync<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
       inject: [ConfigService],

@@ -18,7 +18,7 @@ import { ProviderComplaintsModule } from './modules/provider-complaints/provider
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, envFilePath: 'apps/communication-provider/.env' }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
       autoSchemaFile: { federation: 2 },

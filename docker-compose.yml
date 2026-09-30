@@ -21,7 +21,7 @@ services:
       GUEST_APP_URL: ${GUEST_APP_URL}
       SEED_OPERATOR_EMAIL: ${SEED_OPERATOR_EMAIL}
       SEED_OPERATOR_PASSWORD: ${SEED_OPERATOR_PASSWORD}
-      MONGODB_URI: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@identity-property-db:27017/identity_property?authSource=admin
+      IDENTITY_PROPERTY_MONGODB_URI: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@identity-property-db:27017/identity_property?authSource=admin
     depends_on: [identity-property-db]
 
   identity-property-db:
@@ -39,7 +39,7 @@ services:
     environment:
       PORT: 4002
       INTERNAL_API_KEY: ${INTERNAL_API_KEY}
-      MONGODB_URI: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@safety-operations-db:27017/safety_operations?authSource=admin
+      SAFETY_OPERATIONS_MONGODB_URI: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@safety-operations-db:27017/safety_operations?authSource=admin
       IDENTITY_PROPERTY_URL: http://identity-property:4001/graphql
     depends_on: [safety-operations-db]
 
@@ -58,7 +58,7 @@ services:
     environment:
       PORT: 4003
       INTERNAL_API_KEY: ${INTERNAL_API_KEY}
-      MONGODB_URI: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@communication-provider-db:27017/communication_provider?authSource=admin
+      COMMUNICATION_PROVIDER_MONGODB_URI: mongodb://${MONGO_USER}:${MONGO_PASSWORD}@communication-provider-db:27017/communication_provider?authSource=admin
     depends_on: [communication-provider-db]
 
   communication-provider-db:

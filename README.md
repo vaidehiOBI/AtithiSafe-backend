@@ -53,8 +53,7 @@ libs/common/src/          auth, base schema options, domain events
 
 ```bash
 npm install
-cp .env.example .env    # plus apps/*/.env.example -> apps/*/.env
-docker compose up -d identity-property-db safety-operations-db communication-provider-db
+cp .env.example .env    # configure the three *_MONGODB_URI values for Atlas
 
 npm run start:identity
 npm run start:safety
@@ -63,3 +62,8 @@ npm run start:gateway   # start last: it introspects the services
 ```
 
 Or run everything with `docker compose up --build`.
+
+When running the NestJS services directly with npm, all configuration is read
+from the backend root `.env`. Use a separate MongoDB database for each service.
+Alternatively, `docker compose up --build` runs all services with its local
+MongoDB containers; it does not use the Atlas URIs for the service databases.
