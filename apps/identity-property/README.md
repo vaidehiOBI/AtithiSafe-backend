@@ -3,7 +3,7 @@
 Owns who can access the system and how each hotel operates.
 
 - Port: `4001` (GraphQL federation subgraph at `/graphql`)
-- Database: `identity_property` (PostgreSQL, owned only by this service)
+- Database: `identity_property` (MongoDB, owned only by this service)
 
 ## Modules
 
@@ -24,7 +24,7 @@ Owns who can access the system and how each hotel operates.
 | `escalation-rules` | Escalation rules |
 | `audit-logs` | Audit logs for configuration and permission changes |
 
-## Tables
+## Collections
 
 - `users`
 - `roles`

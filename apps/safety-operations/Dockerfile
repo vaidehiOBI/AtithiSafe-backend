@@ -5,4 +5,4 @@ RUN npm install
 COPY libs ./libs
 COPY apps/safety-operations ./apps/safety-operations
 RUN npx nest build safety-operations
-CMD ["node", "dist/apps/safety-operations/main"]
+CMD ["node", "dist/apps/safety-operations/apps/safety-operations/src/main"]

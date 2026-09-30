@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProviderVerification } from './entities/provider-verification.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ProviderVerification, ProviderVerificationSchema } from './schemas/provider-verification.schema';
 import { ProviderVerificationsResolver } from './provider-verifications.resolver';
 import { ProviderVerificationsService } from './provider-verifications.service';
 
 /** Provider verification, suspension / rejection */
 @Module({
-  imports: [TypeOrmModule.forFeature([ProviderVerification])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: ProviderVerification.name, schema: ProviderVerificationSchema },
+    ]),
+  ],
   providers: [ProviderVerificationsResolver, ProviderVerificationsService],
   exports: [ProviderVerificationsService],
 })

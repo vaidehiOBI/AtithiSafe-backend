@@ -1,13 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { GuestContact } from './entities/guest-contact.entity';
-import { GuestContactsResolver } from './guest-contacts.resolver';
+import { MongooseModule } from '@nestjs/mongoose';
 import { GuestContactsService } from './guest-contacts.service';
+import { GuestContact, GuestContactSchema } from './schemas/guest-contact.schema';
 
-/** Guest emergency contacts */
+/** Guest emergency contacts (exposed through the GuestSession API) */
 @Module({
-  imports: [TypeOrmModule.forFeature([GuestContact])],
-  providers: [GuestContactsResolver, GuestContactsService],
+  imports: [MongooseModule.forFeature([{ name: GuestContact.name, schema: GuestContactSchema }])],
+  providers: [GuestContactsService],
   exports: [GuestContactsService],
 })
 export class GuestContactsModule {}

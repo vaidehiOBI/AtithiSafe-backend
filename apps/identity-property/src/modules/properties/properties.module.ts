@@ -1,12 +1,18 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Property } from './entities/property.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { OrganizationsModule } from '../organizations/organizations.module';
+import { PropertySettingsModule } from '../property-settings/property-settings.module';
 import { PropertiesResolver } from './properties.resolver';
 import { PropertiesService } from './properties.service';
+import { Property, PropertySchema } from './schemas/property.schema';
 
 /** Properties and hotel departments */
 @Module({
-  imports: [TypeOrmModule.forFeature([Property])],
+  imports: [
+    MongooseModule.forFeature([{ name: Property.name, schema: PropertySchema }]),
+    OrganizationsModule,
+    PropertySettingsModule,
+  ],
   providers: [PropertiesResolver, PropertiesService],
   exports: [PropertiesService],
 })

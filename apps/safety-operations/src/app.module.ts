@@ -24,7 +24,7 @@ import { ReportsModule } from './modules/reports/reports.module';
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
       autoSchemaFile: { federation: 2 },
-      context: ({ req }: { req: { headers: Record<string, string> } }) => ({ user: contextFromHeaders(req.headers) }),
+      context: ({ req }: { req: { headers: Record<string, string> } }) => ({ user: contextFromHeaders(req.headers, process.env.INTERNAL_API_KEY) }),
     }),
     DatabaseModule,
     IntegrationsModule,

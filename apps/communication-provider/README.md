@@ -3,7 +3,7 @@
 Handles communication with the guest and manages trusted local providers.
 
 - Port: `4003` (GraphQL federation subgraph at `/graphql`)
-- Database: `communication_provider` (PostgreSQL, owned only by this service)
+- Database: `communication_provider` (MongoDB, owned only by this service)
 
 ## Modules
 
@@ -19,7 +19,7 @@ Handles communication with the guest and manages trusted local providers.
 | `provider-documents` | Provider documents |
 | `provider-complaints` | Provider complaint records |
 
-## Tables
+## Collections
 
 - `conversations`
 - `messages`

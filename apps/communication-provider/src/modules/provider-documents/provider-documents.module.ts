@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ProviderDocument } from './entities/provider-document.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ProviderDocument, ProviderDocumentSchema } from './schemas/provider-document.schema';
 import { ProviderDocumentsResolver } from './provider-documents.resolver';
 import { ProviderDocumentsService } from './provider-documents.service';
 
 /** Provider documents */
 @Module({
-  imports: [TypeOrmModule.forFeature([ProviderDocument])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: ProviderDocument.name, schema: ProviderDocumentSchema },
+    ]),
+  ],
   providers: [ProviderDocumentsResolver, ProviderDocumentsService],
   exports: [ProviderDocumentsService],
 })

@@ -1,8 +1,11 @@
 import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { GraphQLModule } from '@nestjs/graphql';
-import { contextFromHeaders } from '@app/common';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthGuard, contextFromHeaders } from '@app/common';
+import { withHttpErrorCode } from './common/format-error';
 import { DatabaseModule } from './database/database.module';
 import { HealthResolver } from './health/health.resolver';
 import { AuthModule } from './modules/auth/auth.module';
@@ -23,10 +26,26 @@ import { AuditLogsModule } from './modules/audit-logs/audit-logs.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, envFilePath: 'apps/identity-property/.env' }),
-    GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+    GraphQLModule.forRootAsync<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
-      autoSchemaFile: { federation: 2 },
-      context: ({ req }: { req: { headers: Record<string, string> } }) => ({ user: contextFromHeaders(req.headers) }),
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        const internalApiKey = config.getOrThrow<string>('INTERNAL_API_KEY');
+        return {
+          autoSchemaFile: { federation: 2 },
+          sortSchema: true,
+          formatError: withHttpErrorCode,
+          context: ({ req }: { req: { headers: Record<string, string> } }) => ({ user: contextFromHeaders(req.headers, internalApiKey) }),
+        };
+      },
+    }),
+    JwtModule.registerAsync({
+      global: true,
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        secret: config.getOrThrow<string>('JWT_SECRET'),
+        signOptions: { expiresIn: config.get('JWT_EXPIRES_IN', '12h') },
+      }),
     }),
     DatabaseModule,
     AuthModule,
@@ -44,6 +63,6 @@ import { AuditLogsModule } from './modules/audit-logs/audit-logs.module';
     EscalationRulesModule,
     AuditLogsModule,
   ],
-  providers: [HealthResolver],
+  providers: [HealthResolver, { provide: APP_GUARD, useClass: AuthGuard }],
 })
 export class AppModule {}

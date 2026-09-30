@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { JourneyCheckIn } from './entities/journey-check-in.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { JourneyCheckIn, JourneyCheckInSchema } from './schemas/journey-check-in.schema';
 import { CheckInsResolver } from './check-ins.resolver';
 import { CheckInsService } from './check-ins.service';
 
 /** Journey check-ins and missed-check-in escalation */
 @Module({
-  imports: [TypeOrmModule.forFeature([JourneyCheckIn])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: JourneyCheckIn.name, schema: JourneyCheckInSchema },
+    ]),
+  ],
   providers: [CheckInsResolver, CheckInsService],
   exports: [CheckInsService],
 })

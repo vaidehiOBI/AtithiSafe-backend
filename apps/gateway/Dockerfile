@@ -5,4 +5,4 @@ RUN npm install
 COPY libs ./libs
 COPY apps/gateway ./apps/gateway
 RUN npx nest build gateway
-CMD ["node", "dist/apps/gateway/main"]
+CMD ["node", "dist/apps/gateway/apps/gateway/src/main"]

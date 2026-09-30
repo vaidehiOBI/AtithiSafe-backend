@@ -5,4 +5,4 @@ RUN npm install
 COPY libs ./libs
 COPY apps/communication-provider ./apps/communication-provider
 RUN npx nest build communication-provider
-CMD ["node", "dist/apps/communication-provider/main"]
+CMD ["node", "dist/apps/communication-provider/apps/communication-provider/src/main"]

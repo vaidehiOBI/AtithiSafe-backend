@@ -21,6 +21,7 @@
       "@app/common/*": [
         "libs/common/src/*"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   }
 }

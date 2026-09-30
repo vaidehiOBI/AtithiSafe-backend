@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Role } from './entities/role.entity';
+import { MongooseModule } from '@nestjs/mongoose';
 import { RolesResolver } from './roles.resolver';
 import { RolesService } from './roles.service';
+import { Role, RoleSchema } from './schemas/role.schema';
 
 /** Role-based permissions: hotel staff, property admin, chain admin, AtithiSafe operator */
 @Module({
-  imports: [TypeOrmModule.forFeature([Role])],
+  imports: [MongooseModule.forFeature([{ name: Role.name, schema: RoleSchema }])],
   providers: [RolesResolver, RolesService],
   exports: [RolesService],
 })

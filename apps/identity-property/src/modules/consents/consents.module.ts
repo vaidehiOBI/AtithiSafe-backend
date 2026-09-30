@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Consent } from './entities/consent.entity';
+import { MongooseModule } from '@nestjs/mongoose';
 import { ConsentsResolver } from './consents.resolver';
 import { ConsentsService } from './consents.service';
+import { Consent, ConsentSchema } from './schemas/consent.schema';
 
-/** Guest consent records */
+/** Guest consent records (guests record consent through the GuestSession API) */
 @Module({
-  imports: [TypeOrmModule.forFeature([Consent])],
+  imports: [MongooseModule.forFeature([{ name: Consent.name, schema: ConsentSchema }])],
   providers: [ConsentsResolver, ConsentsService],
   exports: [ConsentsService],
 })

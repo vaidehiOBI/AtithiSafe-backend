@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Organization } from './entities/organization.entity';
+import { MongooseModule } from '@nestjs/mongoose';
 import { OrganizationsResolver } from './organizations.resolver';
 import { OrganizationsService } from './organizations.service';
+import { Organization, OrganizationSchema } from './schemas/organization.schema';
 
 /** Hotel chains / organisations */
 @Module({
-  imports: [TypeOrmModule.forFeature([Organization])],
+  imports: [MongooseModule.forFeature([{ name: Organization.name, schema: OrganizationSchema }])],
   providers: [OrganizationsResolver, OrganizationsService],
   exports: [OrganizationsService],
 })

@@ -3,7 +3,7 @@
 Core service. Owns every safety case from creation to resolution.
 
 - Port: `4002` (GraphQL federation subgraph at `/graphql`)
-- Database: `safety_operations` (PostgreSQL, owned only by this service)
+- Database: `safety_operations` (MongoDB, owned only by this service)
 
 ## Modules
 
@@ -21,7 +21,7 @@ Core service. Owns every safety case from creation to resolution.
 | `evidence` | Evidence metadata and secure uploads (photos, documents, verification images) |
 | `reports` | Dashboard / reporting read models for active incidents and property reports |
 
-## Tables
+## Collections
 
 - `incidents`
 - `incident_assignments`

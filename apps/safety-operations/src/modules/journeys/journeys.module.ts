@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Journey } from './entities/journey.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Journey, JourneySchema } from './schemas/journey.schema';
 import { JourneysResolver } from './journeys.resolver';
 import { JourneysService } from './journeys.service';
 
 /** Safe journeys */
 @Module({
-  imports: [TypeOrmModule.forFeature([Journey])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: Journey.name, schema: JourneySchema },
+    ]),
+  ],
   providers: [JourneysResolver, JourneysService],
   exports: [JourneysService],
 })

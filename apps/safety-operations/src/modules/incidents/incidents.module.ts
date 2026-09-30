@@ -1,12 +1,16 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Incident } from './entities/incident.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Incident, IncidentSchema } from './schemas/incident.schema';
 import { IncidentsResolver } from './incidents.resolver';
 import { IncidentsService } from './incidents.service';
 
 /** Emergency alerts and incident reports; categories (medical, lost passport, scam, theft, transport, harassment); severity, status, resolution */
 @Module({
-  imports: [TypeOrmModule.forFeature([Incident])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: Incident.name, schema: IncidentSchema },
+    ]),
+  ],
   providers: [IncidentsResolver, IncidentsService],
   exports: [IncidentsService],
 })
